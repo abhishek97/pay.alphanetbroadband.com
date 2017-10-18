@@ -1,8 +1,19 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+div.app {
+  margin-top: 150px;
 }
 
-a {
-  color: #00B7FF;
+.main.row {
+  background-color: white;
+  max-width: 900px;
+  min-width: 600px;
+  min-height: 400px;
+  margin: 0 auto;
+}
+
+h1.title {
+  margin: 20px;
+}
+
+body {
+  background-color: dimgrey;
 }

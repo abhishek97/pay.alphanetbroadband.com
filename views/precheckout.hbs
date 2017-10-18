@@ -1,0 +1,41 @@
+<h1>Confirm Details</h1>
+
+<table>
+    <tr>
+        <td>CID</td>
+        <td id="customerID">{{customer.CID}}</td>
+        <!-- Other customer details -->
+    </tr>
+    <tr>
+        <td>Select Plan:</td>
+        <td>
+            <select class="form-control" id="plan">
+                {{#each plans}}
+                    <option value="{{this.id}};{{this.amount}};{{this.name}};{{this.quaterly}}">{{this.name}} @{{this.amount}} per month</option>
+                {{/each}}
+            </select>
+        </td>
+    </tr>
+
+    <tr>
+        <td>Months:</td>
+        <td>
+            <select class="form-control" id="month">
+                {{#each months}}
+                    <option>{{this}}</option>
+                {{/each}}
+            </select>
+        </td>
+    </tr>
+
+    <tr>
+        <td>Price to Pay:</td>
+        <td id="price">
+            0
+        </td>
+    </tr>
+</table>
+
+<button id="rzp-button1">Pay</button>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
