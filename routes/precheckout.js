@@ -17,8 +17,8 @@ router.get('/', function(req, res) {
                 message: 'Customer ID not found!'
             })
         }
+        plans = plans.map(plan => (plan.showAmount = plan.amount,plan) )
         plans = U.addOnlineFees(plans)
-
         res.render('precheckout', {razorPayKey: config.razorPay.id, customer, plans, months: Array(13).fill().map( (e,i) => i )})
       })
       .catch(err => {
