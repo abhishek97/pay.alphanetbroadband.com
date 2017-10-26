@@ -19,7 +19,7 @@ router.get('/', function(req, res) {
         }
         plans = U.addOnlineFees(plans)
 
-        res.render('precheckout', {customer, plans, months: Array(13).fill().map( (e,i) => i )})
+        res.render('precheckout', {razorPayKey: config.razorPay.id, customer, plans, months: Array(13).fill().map( (e,i) => i )})
       })
       .catch(err => {
         console.error(err)

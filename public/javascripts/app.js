@@ -6,7 +6,7 @@ const fee = 10
 
 function generateOptions (customer, amount) {
     return {
-        key: "rzp_test_ToOi3x6HooYTNv",
+        key: $('#razorPayKey').val(),
         amount,
         name: "Alphanet Broadband Pvt Ltd",
         description: "Subscription Payment",
