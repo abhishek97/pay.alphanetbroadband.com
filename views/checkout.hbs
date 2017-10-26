@@ -1,4 +1,8 @@
-CHECKOUT DONE.
+<div class="container">
+    <h1>Payment Recieved</h1>
 
-
-{{payment}}
+<p>
+    Payment Recieved for {{payment.currency}} {{payment.amount}} against Customer ID: {{payment.notes.CID}}.<br>
+    Please check your email for payment reciept. Txn ID: {{payment.id}}
+</p>
+</div>

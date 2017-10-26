@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 const razorypay = require('../razorpay')
+const U = require('../utils')
 const db = require('../db')
 
 /* GET home page. */
@@ -12,7 +13,7 @@ router.get('/', async function(req, res, next) {
     const {amount, notes} = payment
     const [planId, planAmount, planName]  = notes.plan.split(';')
 
-    const dbPlans = await db.getPlans()
+    const dbPlans = U.addOnlineFees(await db.getPlans())
 
     const dbPlan = dbPlans.find(plan => plan.id == planId)
 
@@ -26,7 +27,9 @@ router.get('/', async function(req, res, next) {
     try {
         console.log(notes)
         const capturedPayment = await razorypay.payments.capture(razorPaymentId, payment.amount)
+        console.log(capturedPayment)
         await db.addPayment(notes, capturedPayment)
+        capturedPayment.amount /= 100
         res.render('checkout', {payment: capturedPayment})
 
         //TODO: Send Message on facebook

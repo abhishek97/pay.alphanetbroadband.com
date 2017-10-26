@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
+const config = require('../config')
 
+const U = require('../utils')
 const db = require('../db')
 
 /* GET users listing. */
@@ -9,7 +11,14 @@ router.get('/', function(req, res) {
   const plansPromise = db.getPlans()
   Promise.all([customerPromise, plansPromise])
       .then( ([ [customer], plans ]) => {
-        console.log(plans)
+        console.log(customer)
+        if (!customer) {
+            res.render('error', {
+                message: 'Customer ID not found!'
+            })
+        }
+        plans = U.addOnlineFees(plans)
+
         res.render('precheckout', {customer, plans, months: Array(13).fill().map( (e,i) => i )})
       })
       .catch(err => {

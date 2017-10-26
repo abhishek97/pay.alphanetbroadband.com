@@ -1,41 +1,67 @@
+<div class="container">
 <h1>Confirm Details</h1>
 
-<table>
-    <tr>
-        <td>CID</td>
-        <td id="customerID">{{customer.CID}}</td>
-        <!-- Other customer details -->
-    </tr>
-    <tr>
-        <td>Select Plan:</td>
-        <td>
-            <select class="form-control" id="plan">
-                {{#each plans}}
-                    <option value="{{this.id}};{{this.amount}};{{this.name}};{{this.quaterly}}">{{this.name}} @{{this.amount}} per month</option>
-                {{/each}}
-            </select>
-        </td>
-    </tr>
+<table class="table table-bordered">
+    <tbody>
+        <tr>
+            <td>CID</td>
+            <td id="customerID">{{customer.CID}}</td>
+            <!-- Other customer details -->
+        </tr>
+        <tr>
+            <td>Name</td>
+            <td>{{customer.Name}}</td>
+        </tr>
+        <tr>
+            <td>Address</td>
+            <td>{{customer.Address}}</td>
+        </tr>
+        <tr>
+            <td>Mobile</td>
+            <td>+91 {{customer.Mobile}}</td>
+        </tr>
+        <tr>
+            <td>Select Plan:</td>
+            <td>
+                <select class="form-control" id="plan">
+                    {{#each plans}}
+                        <option value="{{this.id}};{{this.amount}};{{this.name}};{{this.quaterly}}">{{this.name}} @{{this.amount}} per month</option>
+                    {{/each}}
+                </select>
+            </td>
+        </tr>
 
-    <tr>
-        <td>Months:</td>
-        <td>
-            <select class="form-control" id="month">
-                {{#each months}}
-                    <option>{{this}}</option>
-                {{/each}}
-            </select>
-        </td>
-    </tr>
+        <tr>
+            <td>Months:</td>
+            <td>
+                <select class="form-control" id="month">
+                    {{#each months}}
+                        <option>{{this}}</option>
+                    {{/each}}
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>Plan Amount:</td>
+            <td id="planPrice">
+                0
+            </td>
+        </tr>
 
-    <tr>
-        <td>Price to Pay:</td>
-        <td id="price">
-            0
-        </td>
-    </tr>
+        <tr>
+            <td>Price to Pay:</td>
+            <td id="price">
+                0
+            </td>
+        </tr>
+    </tbody>
 </table>
 
 <button id="rzp-button1">Pay</button>
+
+<p>
+    Note: INR 10 per month will be charged extra by the payment gateway and is included in the amount shown.
+</p>
+</div>
 
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>

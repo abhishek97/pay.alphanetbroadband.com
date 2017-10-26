@@ -26,17 +26,24 @@ module.exports = {
     getPlans () {
         return runQuery('SELECT * FROM `plans` WHERE TRUE')
     },
-    addPayment (notes, payment) {
+    async addPayment (notes, payment) {
         const options = {
             CID: notes.CID,
             CNAME: notes.Name,
             MONTHS: notes.months,
-            AMOUNT: +payment.amount/100,
+            AMOUNT: (+payment.amount/100) - (+notes.months*config.fee),
             TYPE: 'online',
             COMMENT: notes.plan + ';' + payment.id,
             PLAN: notes.plan.split(';')[2]
         }
-        return runQuery('INSERT INTO `alphanet_payment` SET ?', options)
+        const dbPayment = await runQuery('INSERT INTO `alphanet_payment` SET ?', options)
+
+        console.log(dbPayment)
+        const obj = {
+            PID: dbPayment.insertId,
+            razorPayId: payment.id
+        }
+        return runQuery('INSERT INTO `alphanet_online_payment` SET ?', obj)
     }
 }
 

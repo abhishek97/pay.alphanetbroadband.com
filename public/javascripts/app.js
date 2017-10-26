@@ -2,6 +2,8 @@
  * Created by abhishek on 16/10/17.
  */
 
+const fee = 10
+
 function generateOptions (customer, amount) {
     return {
         key: "rzp_test_ToOi3x6HooYTNv",
@@ -38,6 +40,8 @@ function updatePrice () {
     var planAmountQuaterly = $('#plan').val().split(';')[3]
     var month = $('#month').val()
     var totalAmt = calcAmt(planAmount, planAmountQuaterly, month)
+    var planAmt = totalAmt - (+month*fee)
+    $('#planPrice').html(planAmt > 0 ? planAmt : 0)
     $('#price').html(totalAmt)
 }
 
