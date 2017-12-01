@@ -4,6 +4,7 @@
 'use strict';
  
 const mysql = require('mysql')
+const moment = require('moment')
 const config = require('../config')
 
 const connection = mysql.createConnection(config.db)
@@ -38,12 +39,19 @@ module.exports = {
         }
         const dbPayment = await runQuery('INSERT INTO `alphanet_payment` SET ?', options)
 
-        console.log(dbPayment)
         const obj = {
             PID: dbPayment.insertId,
             razorPayId: payment.id
         }
-        return runQuery('INSERT INTO `alphanet_online_payment` SET ?', obj)
+        await runQuery('INSERT INTO `alphanet_online_payment` SET ?', obj)
+        return runQuery('SELECT * FROM `alphanet_payment` WHERE PID = ?', obj.PID).then( ([u]) => u )
+    },
+    async updateExpiryAndGrace (cid, payment) {
+        console.log(payment)
+        const dbCustomer = await this.getCustomerDetails (cid).then( ([u]) => u)
+        const newExpiry = moment(dbCustomer.expiry).add(payment.MONTHS, 'months')
+        return runQuery('UPDATE `alphanet_customer` SET `Grace` = 0, `expiry` = ? WHERE `CID` = ?', [newExpiry.format('YYYY-MM-DD HH:mm:ss'), cid])
+
     }
 }
 

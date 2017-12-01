@@ -28,10 +28,12 @@ router.get('/', async function(req, res, next) {
         console.log(notes)
         const capturedPayment = await razorypay.payments.capture(razorPaymentId, payment.amount)
         console.log(capturedPayment)
-        await db.addPayment(notes, capturedPayment)
+        const dbPayment = await db.addPayment(notes, capturedPayment)
         capturedPayment.amount /= 100
-        res.render('checkout', {payment: capturedPayment})
 
+        await db.updateExpiryAndGrace(notes.CID, dbPayment)
+
+        res.render('checkout', {payment: capturedPayment})
         //TODO: Send Message on facebook
     } catch (e) {
         console.error(e)
